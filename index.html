@@ -6,18 +6,52 @@
     <title>Document</title>
 </head>
 <body>
+    <form>
+        <input type="search" id="search" required pattern="^[a-zA-Z]\w+$">
+        <button type="submit">get image</button>
+    </form>    
     <img src="#">
 
     <script>
-        let image = document.querySelector("img");
+        let image = document.querySelector("img");        
+        let btn = document.querySelector("button");
+        let value = document.querySelector("#search");
         fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats',{mode:'cors'})
             .then(function(response){
                 return(response.json());
             })
             .then(function(response){
-                console.log(response.data.images.original.url);
+                // console.log(response.data.images.original.url);
                 image.src = response.data.images.original.url;
             });
+
+            function getData(item){
+                const url = 'https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats';
+                fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats',{mode:'cors'})
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(response){
+                    image.src = response.data.images.original.url;
+                }).catch(function(e){
+                    console.log(e);
+                });
+            }
+
+            btn.addEventListener("click", function(){
+                let item = value.value;
+                // 
+                const url = 'https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats';
+                fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats',{mode:'cors'})
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(response){
+                    image.src = response.data.images.original.url;
+                }).catch(function(e){
+                    console.log(e);
+                });
+            })
     </script>
 </body>
 </html>
