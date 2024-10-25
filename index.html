@@ -7,7 +7,7 @@
 </head>
 <body>
     <form>
-        <input type="search" id="search" required pattern="^[a-zA-Z]\w+$">
+        <input type="search" id="search" required pattern="^[a-zA-Z]\w+$" value="dogs">
         <button type="submit">get image</button>
     </form>    
     <img src="#">
@@ -16,41 +16,37 @@
         let image = document.querySelector("img");        
         let btn = document.querySelector("button");
         let value = document.querySelector("#search");
-        fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats',{mode:'cors'})
-            .then(function(response){
-                return(response.json());
-            })
-            .then(function(response){
-                // console.log(response.data.images.original.url);
-                image.src = response.data.images.original.url;
-            });
+        // fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=dogs',{mode:'cors'})
+        //     .then(function(response){
+        //         return(response.json());
+        //     })
+        //     .then(function(response){
+        //         image.src = response.data.images.original.url;
+        //     });
 
-            function getData(item){
-                const url = 'https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats';
-                fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats',{mode:'cors'})
+            function get_data(item){
+                fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s='+item,{mode:'cors'})
                 .then(function(response){
-                    return response.json();
+                    return(response.json());
                 })
                 .then(function(response){
-                    image.src = response.data.images.original.url;
-                }).catch(function(e){
-                    console.log(e);
+                    let length = response.data.length;
+                    if(length > 0){
+                        image.src = response.data.images.original.url;
+                    }else{
+                        image.src = "https://media3.giphy.com/media/Ho5KRBnCEQcLhLo8hB/giphy.gif?cid=fb293c2dktlqfnip2tywl5633kn9f4y6hxbsf6edagwztqb8&ep=v1_gifs_translate&rid=giphy.gif&ct=g";
+                    }                    
+                })
+                .catch(function (err){
+                    console.log('Fetch error: ' + err);
                 });
             }
 
-            btn.addEventListener("click", function(){
+            btn.addEventListener("click", function(e){
+                e.preventDefault();
                 let item = value.value;
-                // 
-                const url = 'https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats';
-                fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s=cats',{mode:'cors'})
-                .then(function(response){
-                    return response.json();
-                })
-                .then(function(response){
-                    image.src = response.data.images.original.url;
-                }).catch(function(e){
-                    console.log(e);
-                });
+                get_data(item);
+                
             })
     </script>
 </body>
