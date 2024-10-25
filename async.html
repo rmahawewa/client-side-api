@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin-left: 5rem;
+        }
+        #search-dev{
+            display: flex;
+            gap: 1rem;
+        }
+        #img-div{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40rem;
+            height: 40rem;
+            background-color: black;
+        }
+        button{
+            width: fit-content;
+            height: fit-content;
+            padding: 0.5rem;
+            background-color: black;
+            color: white;
+            border: 5px solid gold;
+        }
+        #input-search{
+            width: 20rem;
+            height: fit-content;
+            padding: 0.5rem;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h3>Async and Await</h3>
+    <form action="#">
+        <div id="search-div"><input type="search" id="input-search" required pattern="^[a-zA-Z]\w+$" value="dogs"><button type="submit">search</button></div>        
+    </form>
+    <div id="img-div"><img></div>
+    <script>
+        const img = document.querySelector('img');
+      
+        async function getCats(item) {
+          const response = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=Y23Qo8lYZFkaqIWrgqevJB1dnSlJbLrM&s='+item, {mode: 'cors'});
+          const catData = await response.json();
+        //   img.src = catData.data.images.original.url;
+        // console.log(catData.data == {});
+          let length = catData.data;
+                    if(length == {}){
+                        img.src = "https://media3.giphy.com/media/Ho5KRBnCEQcLhLo8hB/giphy.gif?cid=fb293c2dktlqfnip2tywl5633kn9f4y6hxbsf6edagwztqb8&ep=v1_gifs_translate&rid=giphy.gif&ct=g";
+                    }else{
+                        img.src = catData.data.images.original.url;
+                    }   
+        }
+        let item = document.querySelector("#input-search").value;
+        getCats(item);
+
+        let button = document.querySelector("button");
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            let item = document.querySelector("#input-search").value;
+            getCats(item);
+        })
+    </script>
+      
+</body>
+</html>
